@@ -4233,19 +4233,19 @@ recheck:
 	 * Allow unprivileged RT tasks to decrease priority:
 	 */
 	if (user && !capable(CAP_SYS_NICE)) {
-		if (rt_policy(policy)) {
-			unsigned long rlim_rtprio =
-					task_rlimit(p, RLIMIT_RTPRIO);
+//		if (rt_policy(policy)) {
+//			unsigned long rlim_rtprio =
+//					task_rlimit(p, RLIMIT_RTPRIO);
 
 			/* can't set/change the rt policy */
-			if (policy != p->policy && !rlim_rtprio)
-				return -EPERM;
+		//	if (policy != p->policy && !rlim_rtprio)
+		//		return -EPERM;
 
 			/* can't increase priority */
-			if (param->sched_priority > p->rt_priority &&
-			    param->sched_priority > rlim_rtprio)
-				return -EPERM;
-		}
+		//	if (param->sched_priority > p->rt_priority &&
+		//	    param->sched_priority > rlim_rtprio)
+		//		return -EPERM;
+	//	}
 
 		/*
 		 * Treat SCHED_IDLE as nice 20. Only allow a switch to

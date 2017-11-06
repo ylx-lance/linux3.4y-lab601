@@ -1,0 +1,39 @@
+  CHK     include/linux/version.h
+  CHK     include/generated/utsrelease.h
+make[1]: “include/generated/mach-types.h”是最新的。
+  CALL    scripts/checksyscalls.sh
+  CHK     include/generated/compile.h
+  LD      drivers/usb/class/built-in.o
+  LD      drivers/usb/built-in.o
+  LD      drivers/built-in.o
+  LD      vmlinux.o
+  MODPOST vmlinux.o
+  GEN     .version
+  CHK     include/generated/compile.h
+  UPD     include/generated/compile.h
+  CC      init/version.o
+  LD      init/built-in.o
+  LD      .tmp_vmlinux1
+  KSYM    .tmp_kallsyms1.S
+  AS      .tmp_kallsyms1.o
+  LD      .tmp_vmlinux2
+  KSYM    .tmp_kallsyms2.S
+  AS      .tmp_kallsyms2.o
+  LD      vmlinux
+  SYSMAP  System.map
+  SYSMAP  .tmp_System.map
+  OBJCOPY arch/arm/boot/Image
+  Kernel: arch/arm/boot/Image is ready
+  GZIP    arch/arm/boot/compressed/piggy.gzip
+  AS      arch/arm/boot/compressed/piggy.gzip.o
+  LD      arch/arm/boot/compressed/vmlinux
+  OBJCOPY arch/arm/boot/zImage
+  Kernel: arch/arm/boot/zImage is ready
+  UIMAGE  arch/arm/boot/uImage
+Image Name:   Linux-3.4.39-FriendlyARM
+Created:      Wed May 17 10:55:54 2017
+Image Type:   ARM Linux Kernel Image (uncompressed)
+Data Size:    4655944 Bytes = 4546.82 kB = 4.44 MB
+Load Address: 40008000
+Entry Point:  40008000
+  Image arch/arm/boot/uImage is ready
