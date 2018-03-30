@@ -1,4 +1,4 @@
-/*
+x/*
  * multi touch screen driver for it7260
  * base on multi-touch protocol A
  *

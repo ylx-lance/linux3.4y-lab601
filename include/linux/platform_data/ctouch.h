@@ -28,15 +28,16 @@ enum {
 };
 
 #if defined(CONFIG_PLAT_S5P4418_NANOPI2)
-extern unsigned int nanopi2_get_ctp(void);
-extern void nanopi2_set_ctp(int type);
+//extern unsigned int nanopi2_get_ctp(void);
+//extern void nanopi2_set_ctp(int type);
 
 static inline int board_get_ctp(void) {
-	return nanopi2_get_ctp();
+return 0;	
+//return nanopi2_get_ctp();
 }
 
 static inline void board_set_ctp(int type) {
-	nanopi2_set_ctp(type);
+//	nanopi2_set_ctp(type);
 }
 
 #elif defined(CONFIG_PLAT_S5P6818_NANOPI3)

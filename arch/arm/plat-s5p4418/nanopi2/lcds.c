@@ -88,6 +88,35 @@ static void hd700_gpio_init(void)
 
 
 /* NXP display configs for supported LCD */
+static struct nxp_lcd wsvga_l601 = {
+	.width= 800,
+	.height = 600,
+	.p_width = 163,
+	.p_height = 122,
+	.bpp = 24,
+	.freq = 60,
+
+	.timing = {
+		.h_fp = 112,
+		.h_bp = 40,
+		.h_sw = 48,
+		.v_fp = 21,
+		.v_fpe = 1,
+		.v_bp = 36,
+		.v_bpe = 1,
+		.v_sw = 3,
+	},
+	.polarity = {
+		.rise_vclk = 1,
+		.inv_hsync = 1,
+		.inv_vsync = 1,
+		.inv_vden = 0,
+	},
+	.gpio_init = s70_gpio_init,
+	//.gpio_init = hd101_gpio_init,
+};
+
+
 
 static struct nxp_lcd wxga_hd700 = {
 	.width = 800,
@@ -591,6 +620,7 @@ static struct {
 	{ "S702",	&wvga_s702,  1 },
 	{ "S70D",	&wvga_s70d,  0 },
 	{ "X710",	&wsvga_x710, CTP_ITE7260 },
+	{"L601",	&wsvga_l601, 0},
 	{ "S430",	&wvga_s430,  CTP_HIMAX   },
 
 #ifndef CONFIG_ANDROID
@@ -609,7 +639,8 @@ static struct {
 	{ "HDMI",	&hdmi_def,   0 },	/* Pls keep it at last */
 };
 
-static int lcd_idx = 0;
+//static int lcd_idx = 0;
+static int lcd_idx = 8;
 
 static int __init nanopi2_setup_lcd(char *str)
 {
@@ -621,6 +652,7 @@ static int __init nanopi2_setup_lcd(char *str)
 		*delim++ = '\0';
 
 	if (!strncasecmp("HDMI", str, 4)) {
+		goto __ret;//ylx add
 		struct hdmi_config *cfg = &nanopi2_hdmi_config[0];
 		struct nxp_lcd *lcd;
 
@@ -637,6 +669,7 @@ static int __init nanopi2_setup_lcd(char *str)
 	}
 
 	for (i = 0; i < ARRAY_SIZE(nanopi2_lcd_config); i++) {
+		goto __ret;//ylx add
 		if (!strcasecmp(nanopi2_lcd_config[i].name, str)) {
 			lcd_idx = i;
 			break;
@@ -644,6 +677,8 @@ static int __init nanopi2_setup_lcd(char *str)
 	}
 
 __ret:
+
+	lcd_idx = 8;//ylx add
 	board_set_ctp(nanopi2_lcd_config[lcd_idx].ctp);
 
 	printk("Display: %s selected\n", nanopi2_lcd_config[lcd_idx].name);

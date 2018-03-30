@@ -26,10 +26,14 @@
 #include <linux/interrupt.h>
 #include <linux/i2c.h>
 #include <linux/i2c/tsc2007.h>
+//ylx add
+//#include <linux/i2c/cfg_gpio.h>
 
 #include <mach/platform.h>
 #include <mach/devices.h>
 #include <mach/soc.h>
+
+#define CFG_IO_TOUCH_PENDOWN_DETECT CFG_IO_TOUCH_IRQ
 
 #define TSC2007_MEASURE_TEMP0	(0x0 << 4)
 #define TSC2007_MEASURE_AUX		(0x2 << 4)
@@ -183,7 +187,7 @@ static bool tsc2007_is_pen_down(struct tsc2007 *ts)
  #define ADCVAL_Y_MIN		500 //280 
  #define ADCVAL_Y_MAX		3520 //3850 
 
- #define LCD_SCREEN_X_PIXEL	1024 //1024 
+ #define LCD_SCREEN_X_PIXEL	800 //1024 
  #define LCD_SCREEN_Y_PIXEL	600 //600 
 // gylee end 
 
@@ -694,6 +698,19 @@ static struct i2c_driver tsc2007_driver = {
 	.probe		= tsc2007_probe,
 	.remove		= __devexit_p(tsc2007_remove),
 };
+
+//static int __init tsc2007_init(void)
+//{
+//	return i2c_add_driver(&tsc2007_driver);
+//}
+
+//static void __exit tsc2007_exit(void)
+//{
+//	i2c_del_driver(&tsc2007_driver);
+//}
+
+//module_init(tsc2007_init);
+//module_exit(tsc2007_exit);
 
 module_i2c_driver(tsc2007_driver);
 

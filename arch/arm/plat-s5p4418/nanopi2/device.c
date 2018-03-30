@@ -626,6 +626,17 @@ static struct i2c_board_info __initdata it7260_i2c_bdi = {
 };
 #endif
 
+//ylx add
+#if defined(CONFIG_TOUCHSCREEN_TSC2007)
+#define	TSC2007_I2C_BUS		(2)
+
+static struct i2c_board_info __initdata tsc2007_i2c_bdi = {
+	I2C_BOARD_INFO("tsc2007", (0x90>>1)),
+	.irq = PB_PIO_IRQ(CFG_IO_TOUCH_IRQ),
+};
+#endif
+
+
 #if defined(CONFIG_TOUCHSCREEN_1WIRE)
 #include <linux/platform_data/touchscreen-one-wire.h>
 
@@ -1882,6 +1893,12 @@ void __init nxp_board_devices_register(void)
 #if defined(CONFIG_TOUCHSCREEN_IT7260)
 	printk("plat: add touch(it7260) device\n");
 	i2c_register_board_info(IT7260_I2C_BUS, &it7260_i2c_bdi, 1);
+#endif
+
+//ylx add
+#if defined(CONFIG_TOUCHSCREEN_TSC2007)
+	printk("plat: add touch(tsc2007) device\n");
+	i2c_register_board_info(TSC2007_I2C_BUS, &tsc2007_i2c_bdi, 1);
 #endif
 
 #if defined(CONFIG_TOUCHSCREEN_1WIRE)
