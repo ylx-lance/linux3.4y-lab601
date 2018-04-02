@@ -29,6 +29,9 @@
 #include <linux/i2c.h>
 #include <linux/amba/pl022.h>
 
+//ylx add
+#include <linux/i2c/tsc2007.h>
+
 /* nexell soc headers */
 #include <mach/platform.h>
 #include <mach/devices.h>
@@ -629,10 +632,20 @@ static struct i2c_board_info __initdata it7260_i2c_bdi = {
 //ylx add
 #if defined(CONFIG_TOUCHSCREEN_TSC2007)
 #define	TSC2007_I2C_BUS		(2)
+static int tsc2007_get_pendown_state(void){
+	return !gpio_get_value(CFG_IO_TOUCH_IRQ);
+}
+
+struct tsc2007_platform_data tsc2007_data ={
+	.model = 2007,
+	.x_plate_ohms = 180,
+	.get_pendown_state = tsc2007_get_pendown_state,
+};
 
 static struct i2c_board_info __initdata tsc2007_i2c_bdi = {
 	I2C_BOARD_INFO("tsc2007", (0x90>>1)),
 	.irq = PB_PIO_IRQ(CFG_IO_TOUCH_IRQ),
+	.platform_data = &tsc2007_data,
 };
 #endif
 
@@ -1885,10 +1898,10 @@ void __init nxp_board_devices_register(void)
 	printk("plat: goodix: irq=%d (%d)\n", PB_PIO_IRQ(CFG_IO_TOUCH_IRQ), CFG_IO_TOUCH_IRQ);
 #endif
 
-#if defined(CONFIG_TOUCHSCREEN_HIMAX)
-	printk("plat: add touch(himax) device\n");
-	i2c_register_board_info(HIMAX_I2C_BUS, &himax_i2c_bdi, 1);
-#endif
+//#if defined(CONFIG_TOUCHSCREEN_HIMAX)
+//	printk("plat: add touch(himax) device\n");
+//	i2c_register_board_info(HIMAX_I2C_BUS, &himax_i2c_bdi, 1);
+//#endif
 
 #if defined(CONFIG_TOUCHSCREEN_IT7260)
 	printk("plat: add touch(it7260) device\n");
